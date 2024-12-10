@@ -411,6 +411,11 @@ namespace ORB_SLAM3
             nfeatures(_nfeatures), scaleFactor(_scaleFactor), nlevels(_nlevels),
             iniThFAST(_iniThFAST), minThFAST(_minThFAST)
     {
+
+        // 改进 1.模型加载
+        std::string WEIGHTS_PATH = "/home/cuimingdi/Project/ORB_SLAM3/superpoint.pt";
+        this->model = new SuperPointSLAM::SPDetector(WEIGHTS_PATH, false);
+
         mvScaleFactor.resize(nlevels);
         mvLevelSigma2.resize(nlevels);
         mvScaleFactor[0]=1.0f;
@@ -786,6 +791,8 @@ namespace ORB_SLAM3
 
         for (int level = 0; level < nlevels; ++level)
         {
+            // 改进 模型检测
+            this->model->detect(mvImagePyramid[level], false);
             const int minBorderX = EDGE_THRESHOLD-3;
             const int minBorderY = minBorderX;
             const int maxBorderX = mvImagePyramid[level].cols-EDGE_THRESHOLD+3;

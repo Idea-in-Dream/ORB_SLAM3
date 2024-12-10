@@ -23,6 +23,8 @@
 #include <list>
 #include <opencv2/opencv.hpp>
 
+#include <torch/torch.h>
+#include "SPDetector.hpp"
 
 namespace ORB_SLAM3
 {
@@ -106,6 +108,9 @@ protected:
     std::vector<float> mvInvScaleFactor;    
     std::vector<float> mvLevelSigma2;
     std::vector<float> mvInvLevelSigma2;
+
+    // 改进 0.模型定义
+    SuperPointSLAM::SPDetector* model;
 };
 
 } //namespace ORB_SLAM
